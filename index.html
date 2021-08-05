@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/tailwind.css" />
+    <title>Gunung Nusantara</title>
+  </head>
+  <body x-data="homepage()" x-init="init()" class="bg-white">
+      <div
+        class="max-w-screen-xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-24"
+      >
+        <div class="space-y-8 sm:space-y-12">
+          <div
+            class="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl"
+          >
+            <h2
+              class="text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl text-green-700"
+            >
+              Gunung Nusantara
+            </h2>
+            <p class="text-xl leading-7 text-gray-500">
+              Built with
+              <a href="https://github.com/alpinejs/alpine">Alpine.js</a>
+            </p>
+          </div>
+          <div class="sm:mx-auto sm:max-w-xl lg:max-w-xl py-4">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative rounded-md shadow">
+              <input
+                id="search"
+                class="block h-10 w-full px-4 sm:text-sm sm:leading-5 focus:bg-green-50"
+                x-model="search"
+                placeholder="Search name or province"
+              />
+            </div>
+          </div>
+          <ul
+            class="mx-auto grid grid-cols-2 col-gap-4 row-gap-8 sm:grid-cols-4 md:col-gap-6 lg:max-w-5xl lg:col-gap-8 lg:row-gap-12 xl:grid-cols-6"
+          >
+            <template x-for="mountain in mountains" :key="mountain.id">
+              <li>
+                 <div class="my-6">
+                    <div
+                      class="leading-4 font-medium lg:text-sm lg:leading-5"
+                    >
+                      <h4 class="mb-3 text-xl" x-text="mountain.name"></h4>
+                        <span                          
+                          class="mb-3 inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium leading-4 bg-gray-200 text-gray-800"
+                        ><span x-text="mountain.elevation"></span>&nbsp;mdpl</span>
+                        <p x-text="mountain.province"></p>
+                    </div>
+                  </div>
+              </li>
+            </template>
+          </ul>
+          <span class="inline-flex rounded-md shadow-sm">
+            <button
+              type="button"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-full text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition ease-in-out duration-150"
+              @click="showMore()"
+            >
+              Show More
+            </button>
+          </span>
+        </div>
+      </div>
+    <script>
+      function homepage() {
+        return {
+          _items: [],
+          displayCount: 12,
+          search: '',
+          init() {
+            fetch('/mountains.json')
+              .then((res) => res.text())
+              .then(JSON.parse)
+              .then((data) => {
+                this._items = data;
+              });
+          },
+          get mountains() {
+            return this._items
+              .filter((m) => {
+                const pattern = new RegExp(this.search, 'i');
+                return ((m.name.match(pattern) || m.province.match(pattern)))
+                ;
+              })
+              .slice(0, this.displayCount);
+          },
+          showMore() {
+            this.displayCount += 12;
+          },
+        };
+      }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.min.js"></script>
+  </body>
+</html>
