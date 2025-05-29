@@ -1,0 +1,25 @@
+{
+  "name": "indonesia-mountain-v2",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "generate:mountains": "node ./scripts/generate-mountains.js",
+    "dev": "astro dev",
+    "build": "npm run generate:mountains && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.3.0",
+    "@supabase/supabase-js": "^2.49.8",
+    "@tailwindcss/vite": "^4.1.8",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "astro": "^5.8.0",
+    "dotenv": "^16.5.0",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.8"
+  }
+}

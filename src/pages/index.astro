@@ -1,0 +1,20 @@
+---
+import mountains from '../../public/mountains.json' assert { type: 'json' }
+import "../styles/global.css"
+import Layout from '../components/Layout'
+import SearchBar from '../components/SearchBar.jsx'
+
+const initialMountains = mountains.slice(0, 9)
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mountains of Indonesia</title>
+  </head>
+  <body class="font-sans bg-teal-950">
+    <Layout>
+      <SearchBar  client:load />
+    </Layout>
+  </body>
+</html>
