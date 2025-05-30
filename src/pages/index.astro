@@ -1,20 +1,27 @@
 ---
-import mountains from '../../public/mountains.json' assert { type: 'json' }
 import "../styles/global.css"
-import Layout from '../components/Layout'
 import SearchBar from '../components/SearchBar.jsx'
-
-const initialMountains = mountains.slice(0, 9)
 ---
 
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>Mountains of Indonesia</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Nama-nama gunung di Indonesia,lokasi dan ketinggiannya.">
+    <title>Gunung Nusantara</title>
   </head>
   <body class="font-sans bg-teal-950">
-    <Layout>
-      <SearchBar  client:load />
-    </Layout>
+    <div class="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 lg:py-8">
+        <div class="min-h-screen bg-teal-950 text-white px-4 py-6 font-sans">
+          <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-6 text-center">
+            <h2 class="text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl text-white-700">
+                ⛰️ Gunung Nusantara
+            </h2>
+          </div>
+          <div class="max-w-2xl w-full mx-auto px-4 sm:px-6">
+            <SearchBar client:load />
+          </div>
+        </div>
+    </div>
   </body>
 </html>
