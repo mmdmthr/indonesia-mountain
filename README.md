@@ -1,12 +1,10 @@
 # Gunung Nusantara
 
-Built with tailwindcss and alpinejs
+Built with Astro (React + Tailwind CSS)
 
 Cari nama-nama gunung di Nusantara [https://indonesia-mountain.netlify.app/](https://indonesia-mountain.netlify.app/).
 Lihat ulasan selengkapnya mengenai gunung-gunung di Nusantara di [gunungbagging.com](https://www.gunungbagging.com).
 Data gunung didapatkan dari [gunungbagging.com/ribu-categories/all-the-ribus](https://www.gunungbagging.com/ribu-categories/all-the-ribus/).
-
-Dibuat berdasarkan projek [Pokédex](https://github.com/armedi/pokedex-alpinejs)
 
 ---
 
