@@ -423,21 +423,21 @@
     "island": "Sumatera"
   },
   {
-    "id": 97,
-    "name": "Bukit Raya",
-    "elevation": 2300,
-    "lat": -0.65985,
-    "long": 112.68889,
-    "province": "Kalimantan Tengah",
-    "island": "Kalimantan"
-  },
-  {
     "id": 76,
     "name": "Bukit Raya",
     "elevation": 1200,
     "lat": -1.5333,
     "long": 111.0817,
     "province": "Kalimantan Barat",
+    "island": "Kalimantan"
+  },
+  {
+    "id": 97,
+    "name": "Bukit Raya",
+    "elevation": 2300,
+    "lat": -0.65985,
+    "long": 112.68889,
+    "province": "Kalimantan Tengah",
     "island": "Kalimantan"
   },
   {
@@ -1164,8 +1164,8 @@
     "id": 311,
     "name": "Kembang",
     "elevation": 2370,
-    "lat": 109.8752337,
-    "long": -7.4874568,
+    "lat": -7.4874568,
+    "long": 109.8752337,
     "province": "Jawa Tengah",
     "island": "Jawa"
   },
@@ -1672,6 +1672,15 @@
     "long": 124.22755,
     "province": "Nusa Tenggara Timur",
     "island": "Timor"
+  },
+  {
+    "id": 312,
+    "name": "Nglanggeran",
+    "elevation": 700,
+    "lat": -7.841485,
+    "long": 110.5429023,
+    "province": "DI Yogyakarta",
+    "island": "Jawa"
   },
   {
     "id": 230,

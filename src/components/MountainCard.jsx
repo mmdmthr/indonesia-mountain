@@ -6,7 +6,13 @@ export default function MountainCard({ mountain }) {
         {Number(mountain.elevation).toLocaleString()} mdpl
       </div>
       <div className="text-sm text-gray-400">
-        {mountain.province}
+        <a
+          href={`https://www.google.com/maps/@${mountain.lat},${mountain.long},15z`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+        📍 {mountain.province}
+        </a>
       </div>
     </div>
   )
