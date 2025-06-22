@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css"
+import "../styles/navbar.css"
 import SearchBar from '../components/SearchBar.jsx'
 ---
 
@@ -10,15 +11,30 @@ import SearchBar from '../components/SearchBar.jsx'
     <meta name="description" content="Nama-nama gunung di Indonesia,lokasi dan ketinggiannya.">
     <meta name="google-site-verification" content="nh2jnkmb60HsSF6-mzod5B4ULrGtOpfefhM7i1EIjXk" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <title>Gunung Nusantara</title>
   </head>
   <body class="font-sans bg-teal-950">
     <div class="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 lg:py-8">
         <div class="min-h-screen bg-teal-950 text-white px-4 py-6 font-sans">
           <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-6 text-center">
-            <h2 class="text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl text-white-700">
+            <h2 class="text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl text-white-700 mb-4">
                 ⛰️ Gunung Nusantara
             </h2>
+            <nav>
+              <ul>
+                <li>
+                  <a href="resources.html">
+                    <i class="fas fa-clipboard-list"></i> Resources
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/mmdmthr/indonesia-mountain" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
           <div class="max-w-2xl w-full mx-auto px-4 sm:px-6">
             <SearchBar client:load />
