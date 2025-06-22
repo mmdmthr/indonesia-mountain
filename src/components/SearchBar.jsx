@@ -12,7 +12,6 @@ export default function SearchBar() {
     fetch("/mountains.json")
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched mountains:", data)
         setMountains(data)
       })
       .catch((err) => console.error("Failed to fetch:", err))
