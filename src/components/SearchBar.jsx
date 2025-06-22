@@ -30,7 +30,7 @@ export default function SearchBar() {
         <Search className="absolute left-3 top-3.5 text-gray-400 w-5 h-5" />
         <input
           type="search"
-          placeholder="Search name or province..."
+          placeholder="Cari nama gunung atau provinsi..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value)
@@ -54,7 +54,7 @@ export default function SearchBar() {
             onClick={() => setPage((p) => p + 1)}
             className="w-full sm:w-autopx-5 py-2 bg-teal-800 hover:bg-teal-900 text-white rounded-full text-sm sm:text-base"
           >
-            Show more
+            Tampilkan lebh banyak
           </button>
         </div>
       )}
