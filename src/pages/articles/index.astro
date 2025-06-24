@@ -3,6 +3,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
+import Prose from '../../components/Prose.astro';
 
 const articles: CollectionEntry<'articles'>[] = await getCollection('articles');
 const groupedArticles = Object.groupBy(articles, (article) => article.data.category);
@@ -10,23 +11,23 @@ const groupedArticles = Object.groupBy(articles, (article) => article.data.categ
 ---
 
 <MainLayout>
-
-<h2 class="text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl text-white-700 mb-4">Artikel</h2>
-<ul>
-  <b>Etika Alam</b>
-  {groupedArticles.etikaAlam?.map(article => (
-    <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
-  ))}
-  <br />
-  <b>The Essentials</b>
-  {groupedArticles.theEssentials?.map(article => (
-    <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
-  ))}
-  <br />
-  <b>Bagaimana Cara</b>
-  {groupedArticles.howTo?.map(article => (
-    <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
-  ))}
-</ul>
-
+  <Prose>
+    <h2>Artikel</h2>
+    <ul>
+      <b>Etika Alam</b>
+      {groupedArticles.etikaAlam?.map(article => (
+        <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
+      ))}
+      <br />
+      <b>The Essentials</b>
+      {groupedArticles.theEssentials?.map(article => (
+        <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
+      ))}
+      <br />
+      <b>Bagaimana Cara</b>
+      {groupedArticles.howTo?.map(article => (
+        <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
+      ))}
+    </ul>
+  </Prose>
 </MainLayout>
