@@ -1,0 +1,19 @@
+---
+
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const articles = await getCollection('articles');
+
+---
+
+<MainLayout>
+
+<h1>Articles</h1>
+<ul>
+  {articles.map(article => (
+    <li><a href={`/articles/${article.id}`}>{article.data.title}</a></li>
+  ))}
+</ul>
+
+</MainLayout>
