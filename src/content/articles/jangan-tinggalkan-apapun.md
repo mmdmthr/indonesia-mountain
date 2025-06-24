@@ -2,7 +2,7 @@
 title: "Jangan Tinggalkan Apapun"
 pubDate: 2025-06-24
 updatedDate: 2025-06-24
-category: "Etika Alam"
+category: etikaAlam
 tags: ["Sampah"]
 ---
 

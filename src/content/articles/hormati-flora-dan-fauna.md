@@ -2,7 +2,7 @@
 title: "Hormati Flora dan Fauna"
 pubDate: 2025-06-24
 updatedDate: 2025-06-24
-category: "Etika Alam"
+category: etikaAlam
 tags: ["Flora", "Fauna"]
 ---
 
