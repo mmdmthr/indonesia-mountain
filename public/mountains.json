@@ -360,6 +360,15 @@
     "island": "Seram"
   },
   {
+    "id": 314,
+    "name": "Bismo",
+    "elevation": 2365,
+    "lat": -7.2477376,
+    "long": 109.8835594,
+    "province": "Jawa Tengah",
+    "island": "Jawa"
+  },
+  {
     "id": 75,
     "name": "Biwa",
     "elevation": 1321,
@@ -573,6 +582,15 @@
     "lat": -7.322577301,
     "long": 107.8599492,
     "province": "Jawa Barat",
+    "island": "Jawa"
+  },
+  {
+    "id": 315,
+    "name": "Cilik Kaliurip",
+    "elevation": 1550,
+    "lat": -7.3336348,
+    "long": 109.9686572,
+    "province": "Jawa Tengah",
     "island": "Jawa"
   },
   {
@@ -1771,6 +1789,15 @@
     "long": 121.5577381,
     "province": "Sulawesi Tenggara",
     "island": "Sulawesi"
+  },
+  {
+    "id": 313,
+    "name": "Pakuwaja",
+    "elevation": 2421,
+    "lat": -7.2291665,
+    "long": 109.9124781,
+    "province": "Jawa Tengah",
+    "island": "Jawa"
   },
   {
     "id": 86,
