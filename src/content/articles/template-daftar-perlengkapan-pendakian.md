@@ -1,5 +1,5 @@
 ---
-title: "Template Daftar Perlengkapan"
+title: "Template Daftar Perlengkapan - Hiking dengan Camping"
 pubDate: 2025-06-24
 updatedDate: 2025-06-28
 category: howTo
