@@ -6,7 +6,7 @@ category: etikaAlam
 tags: ["Sampah"]
 ---
 
-# Jangan Meninggalkan Apapun di Alam
+# Jangan Meninggalkan Apapun di Alam 👣
 
 Alam memberikan kita banyak hal: udara segar, pemandangan indah, dan ketenangan. Supaya keindahan ini tetap terjaga untuk semua orang, ada satu prinsip sederhana yang perlu kita ingat saat beraktivitas di luar:  
 

@@ -6,6 +6,6 @@ category: etikaAlam
 tags: ["Jalur", "Ekosistem"]
 ---
 
-# Tetap di Jalur Resmi
+# Tetap di Jalur Resmi🚶‍♂️🌿
 
-Hindari membuat jalur baru karena dapat merusak ekosistem dan mempercepat erosi.
+Selalu gunakan jalur pendakian atau trek resmi yang sudah tersedia. Hindari membuat jalur baru atau memotong jalan karena dapat merusak ekosistem, mengganggu regenerasi tanaman, dan mempercepat erosi tanah. Dengan tetap di jalur, kita ikut menjaga alam agar tetap lestari untuk pendaki berikutnya.
