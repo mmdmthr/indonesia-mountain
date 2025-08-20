@@ -51,6 +51,4 @@ Asupan makanan di alam perlu memperhatikan tiga hal: energi, ketahanan, dan bobo
 
 ---
 
-### Penutup
-
 Memasak di alam terbuka adalah seni menggabungkan **efisiensi, keamanan, dan rasa hormat pada lingkungan**. Dengan perencanaan matang dan sikap bertanggung jawab, makan di gunung bukan hanya sekadar mengisi tenaga, tapi juga bagian dari pengalaman berharga yang akan selalu diingat.
