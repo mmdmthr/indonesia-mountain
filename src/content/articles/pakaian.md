@@ -6,7 +6,7 @@ category: theEssentials
 tags: ["Jaket", "Pakaian"]
 ---
 
-# Sistem Layering dalam Berpakaian: Kunci Bertahan Hangat di Alam Bebas
+# Sistem Layering dalam Berpakaian
 
 Salah satu kesalahan paling umum saat orang pergi ke gunung atau camping adalah **salah pilih pakaian**. Terlalu tebal, malah kepanasan dan basah keringat. Terlalu tipis, menggigil sepanjang malam. Solusinya bukan bawa jaket paling tebal yang ada di lemari, tapi **pakai sistem layering**.
 
@@ -58,4 +58,6 @@ Ini pelindung dari **angin, hujan, dan salju**.
 * **Mid**: jaga tubuh tetap hangat
 * **Outer**: jaga tubuh tetap terlindungi dari cuaca
 
-Dengan sistem ini, kita bisa menyesuaikan diri dengan kondisi. Misalnya saat jalan nanjak → buka mid layer biar tidak kepanasan. Malam dingin → tambah mid layer atau ganti yang lebih tebal. Hujan → tambah outer layer.
+---
+
+Selain penutup tubuh, kita juga bisa menambahkan kaos kaki, sarung tangan dan kupluk/beanie untuk menambah kehangatan. Dengan sistem ini, kita bisa menyesuaikan diri dengan kondisi. Misalnya saat jalan nanjak → buka mid layer biar tidak kepanasan. Malam dingin → tambah mid layer atau ganti yang lebih tebal. Hujan → tambah outer layer.

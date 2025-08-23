@@ -25,10 +25,12 @@ tags: ["Perlengkapan"]
 **Perbekalan**
 - Minum (1 liter) - air putih atau elektrolit
 - Snack (buah/camilan sehat)
+- Makan besar (jika diperlukan)
 
 **Elektronik**
 - HP
 - Smart watch (opsional)
+- Headlamp (jika mulai mendaki dini hari)
 
 **P3K**
 - Plester luka
