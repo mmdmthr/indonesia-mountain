@@ -1,2 +1,23 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Ensure smooth transitions for theme changes */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Light theme (default) */
+:root {
+  color-scheme: light;
+}
+
+/* Dark theme */
+.dark {
+  color-scheme: dark;
+}
