@@ -22,7 +22,7 @@ Peralatan masak outdoor dirancang untuk ringan, ringkas, dan tahan lama. Beberap
 
 Asupan makanan di alam perlu memperhatikan tiga hal: energi, ketahanan, dan bobot.
 
-* **Kalori & Nutrisi**: Aktivitas mendaki membakar energi tinggi, jadi pilih makanan dengan kombinasi karbohidrat, protein, dan lemak sehat.
+* **Kalori & Nutrisi**: Aktivitas mendaki membakar energi tinggi, itu bisa mencapai 5000 kkal dalam perjalanan satu hari. Jadi pilih makanan dengan kombinasi karbohidrat, protein, dan lemak sehat untuk mencukupi kebutuhan energi dan nutrisi sepanjang perjalanan.
 * **Ketahanan & Ringan**: Bawa bahan yang awet tanpa pendingin, misalnya nasi instan, oatmeal, mie instan, abon, kacang-kacangan, cokelat, atau energy bar.
 * **Porsi Praktis**: Pisahkan bahan dalam kantong ziplock untuk sekali masak, supaya tidak repot menakar di gunung.
 
