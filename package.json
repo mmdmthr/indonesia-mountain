@@ -5,7 +5,7 @@
   "scripts": {
     "generate:mountains": "node ./scripts/generate-mountains.js",
     "dev": "astro dev",
-    "build": "npm run generate:mountains && astro build",
+    "build": "npm run && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
