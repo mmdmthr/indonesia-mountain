@@ -12,7 +12,7 @@ import ThemeToggle from "../components/ThemeToggle.jsx"
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <title>Gunung Nusantara</title>
-    
+
     <!-- Dark mode initialization script -->
     <script is:inline>
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -22,6 +22,14 @@ import ThemeToggle from "../components/ThemeToggle.jsx"
           (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
       );
     </script>
+    <link rel="manifest" href="/manifest.json">
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js').then(function() {
+          console.log('Service Worker Registered');
+        });
+      }
+    </script>
   </head>
   <body class="font-sans bg-zinc-100 dark:bg-teal-950 text-gray-900 dark:text-gray-100 transition-colors">
     <div class="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 lg:py-8">
@@ -29,7 +37,7 @@ import ThemeToggle from "../components/ThemeToggle.jsx"
         <div class="fixed top-4 right-4 z-50">
           <ThemeToggle client:load />
         </div>
-        
+
         <div class="min-h-screen bg-zinc-100 dark:bg-teal-950 text-gray-900 dark:text-gray-100 px-4 py-6 font-sans transition-colors">
           <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-6 text-center">
             <h2 class="text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl text-gray-900 dark:text-gray-100 mb-4">
