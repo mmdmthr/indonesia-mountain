@@ -1,0 +1,43 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+    const dir = path.join(process.cwd(), "public/heightmaps");
+
+    const files = fs.readdirSync(dir);
+
+    return files
+        .filter((file) => file.endsWith("_heightmap.png"))
+        .map((file) => ({
+            params: {
+                slug: file.replace("_heightmap.png", ""),
+            },
+        }));
+}
+
+const { slug } = Astro.params;
+
+const imagePath = `/heightmaps/${slug}_heightmap.png`;
+---
+
+<MainLayout fullWidth={true}>
+    <div id="scene-container"></div>
+
+    <script type="module" define:vars={{ imagePath }}>
+        import { renderMountain } from "../../scripts/mountainRenderer.js";
+
+        const container = document.getElementById("scene-container");
+
+        renderMountain(container, imagePath);
+    </script>
+</MainLayout>
+
+<style>
+    #scene-container {
+        width: 75%;
+        height: 100vh;
+    }
+</style>
