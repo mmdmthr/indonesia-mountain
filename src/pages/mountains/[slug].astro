@@ -4,6 +4,8 @@ import path from "node:path";
 
 import MainLayout from "../../layouts/MainLayout.astro";
 
+import MountainViewer from "../../components/MountainViewer.jsx";
+
 export async function getStaticPaths() {
     const dir = path.join(process.cwd(), "public/heightmaps");
 
@@ -24,20 +26,5 @@ const imagePath = `/heightmaps/${slug}_heightmap.png`;
 ---
 
 <MainLayout fullWidth={true}>
-    <div id="scene-container"></div>
-
-    <script type="module" define:vars={{ imagePath }}>
-        import { renderMountain } from "../../scripts/mountainRenderer.js";
-
-        const container = document.getElementById("scene-container");
-
-        renderMountain(container, imagePath);
-    </script>
+    <MountainViewer client:load imagePath={imagePath} />
 </MainLayout>
-
-<style>
-    #scene-container {
-        width: 75%;
-        height: 100vh;
-    }
-</style>
