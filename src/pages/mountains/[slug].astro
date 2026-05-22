@@ -1,0 +1,30 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import MountainViewer from "../../components/MountainViewer.jsx";
+
+export async function getStaticPaths() {
+    const dir = path.join(process.cwd(), "public/heightmaps");
+
+    const files = fs.readdirSync(dir);
+
+    return files
+        .filter((file) => file.endsWith("_heightmap.png"))
+        .map((file) => ({
+            params: {
+                slug: file.replace("_heightmap.png", ""),
+            },
+        }));
+}
+
+const { slug } = Astro.params;
+
+const imagePath = `/heightmaps/${slug}_heightmap.png`;
+---
+
+<MainLayout fullWidth={true}>
+    <MountainViewer client:load imagePath={imagePath} />
+</MainLayout>
