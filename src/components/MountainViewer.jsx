@@ -1,11 +1,34 @@
 import { useEffect, useRef } from "react";
 
 import * as THREE from "three";
+import * as toGeoJSON from "@tmcw/togeojson";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-export default function MountainViewer({ imagePath, texturePath }) {
+export default function MountainViewer({ imagePath, texturePath, gpxPath, bbox }) {
   const containerRef = useRef(null);
+
+  function latLonToScene(
+    lat,
+    lon,
+    bbox,
+    terrainWidth,
+    terrainHeight,
+  ) {
+    const x =
+      ((lon - bbox.west) /
+        (bbox.east - bbox.west))
+      * terrainWidth
+      - terrainWidth / 2;
+
+    const z =
+      ((bbox.north - lat) /
+        (bbox.north - bbox.south))
+      * terrainHeight
+      - terrainHeight / 2;
+
+    return { x, z };
+  }
 
   useEffect(() => {
     const container = containerRef.current;
@@ -115,7 +138,97 @@ export default function MountainViewer({ imagePath, texturePath }) {
 
       const terrain = new THREE.Mesh(geometry, material);
 
+      async function loadGPX() {
+        const response = await fetch(gpxPath);
+
+        const text = await response.text();
+
+        const parser = new DOMParser();
+
+        const xml = parser.parseFromString(
+          text,
+          "application/xml",
+        );
+
+        const geojson =
+          toGeoJSON.gpx(xml);
+
+        const track =
+          geojson.features.find(
+            (f) =>
+              f.geometry.type ===
+              "LineString",
+          );
+
+        if (!track) return;
+
+        const points = [];
+
+        track.geometry.coordinates.forEach(
+          (coord) => {
+            const lon = coord[0];
+            const lat = coord[1];
+            const ele = coord[2] || 0;
+
+            const { x, z } =
+              latLonToScene(
+                lat,
+                lon,
+                bbox,
+                terrainWidth,
+                terrainHeight,
+              );
+
+            const px = Math.floor(
+              ((lon - bbox.west) /
+                (bbox.east - bbox.west))
+              * img.width
+            );
+
+            const pz = Math.floor(
+              ((bbox.north - lat) /
+                (bbox.north - bbox.south))
+              * img.height
+            );
+
+            const pixelIndex =
+              (pz * img.width + px) * 4;
+
+            const brightness =
+              data[pixelIndex];
+
+            const y =
+              brightness * 0.15;
+
+            points.push(
+              new THREE.Vector3(
+                x,
+                y + 0.15,
+                z,
+              ),
+            );
+          },
+        );
+
+        const lineGeometry =
+          new THREE.BufferGeometry()
+            .setFromPoints(points);
+
+        const lineMaterial =
+          new THREE.LineBasicMaterial({
+            color: 0xff0000,
+          });
+
+        const line = new THREE.Line(
+          lineGeometry,
+          lineMaterial,
+        );
+
+        scene.add(line);
+      }
+
       scene.add(terrain);
+      loadGPX();
 
       animate();
     };
@@ -145,7 +258,7 @@ export default function MountainViewer({ imagePath, texturePath }) {
 
       container.innerHTML = "";
     };
-  }, [imagePath]);
+  }, [imagePath, texturePath, gpxPath, bbox]);
 
   return <div ref={containerRef} className="w-full h-[80vh]" />;
 }
