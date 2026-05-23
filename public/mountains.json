@@ -2797,7 +2797,13 @@
     "long": 110.07121,
     "province": "Jawa Tengah",
     "island": "Jawa",
-    "slug": "sumbing"
+    "slug": "sumbing",
+    "bbox": {
+      "north": -7.3399340,
+      "south": -7.4399190,
+      "west": 110.0099760,
+      "east": 110.1299880
+    }
   },
   {
     "id": 19,

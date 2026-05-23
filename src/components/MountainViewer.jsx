@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-export default function MountainViewer({ imagePath }) {
+export default function MountainViewer({ imagePath, texturePath }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -66,9 +66,15 @@ export default function MountainViewer({ imagePath }) {
 
       const data = imageData.data;
 
+      const aspect = img.width / img.height;
+
+      const terrainWidth = 200;
+
+      const terrainHeight = terrainWidth / aspect;
+
       const geometry = new THREE.PlaneGeometry(
-        200,
-        200,
+        terrainWidth,
+        terrainHeight,
         img.width - 1,
         img.height - 1,
       );
@@ -95,9 +101,16 @@ export default function MountainViewer({ imagePath }) {
 
       geometry.computeVertexNormals();
 
+      const textureLoader =
+        new THREE.TextureLoader();
+
+      const terrainTexture =
+        textureLoader.load(
+          texturePath
+        );
+
       const material = new THREE.MeshStandardMaterial({
-        color: 0x556b2f,
-        wireframe: false,
+        map: terrainTexture,
       });
 
       const terrain = new THREE.Mesh(geometry, material);
