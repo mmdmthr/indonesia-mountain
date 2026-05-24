@@ -21,18 +21,12 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-
-const imagePath = `/heightmaps/${slug}_heightmap.png`;
-const texturePath = `/textures/${slug}_satellite.jpg`;
-const gpxPath = `/gpx/${slug}.gpx`;
 ---
 
 <MainLayout fullWidth={true}>
     <MountainViewer
-        client:load
-        imagePath={imagePath}
-        texturePath={texturePath}
-        gpxPath={gpxPath}
+        client:only
+        slug={slug}
         bbox={{
             north: -7.339934,
             south: -7.439919,

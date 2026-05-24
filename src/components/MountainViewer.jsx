@@ -5,8 +5,19 @@ import * as toGeoJSON from "@tmcw/togeojson";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-export default function MountainViewer({ imagePath, texturePath, gpxPath, bbox }) {
+export default function MountainViewer({ slug, bbox }) {
   const containerRef = useRef(null);
+  const imagePath = `/heightmaps/${slug}_heightmap.png`;
+  const texturePath = `/textures/${slug}_satellite.jpg`;
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const route =
+    params.get("route") ||
+    "mangli";
+  const gpxPath = `/gpx/${slug}/${route}.gpx`;
 
   function latLonToScene(
     lat,
