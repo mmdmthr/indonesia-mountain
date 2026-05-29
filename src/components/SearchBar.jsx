@@ -1,26 +1,21 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Search } from "lucide-react"
 import MountainCard from "./MountainCard"
 
-export default function SearchBar() {
-  const [mountains, setMountains] = useState([])
+// Mountains are fetched server-side in index.astro and passed as a prop.
+// This keeps the initial data fetch off the client and improves SEO/performance.
+export default function SearchBar({ mountains = [] }) {
   const [search, setSearch] = useState("")
   const [page, setPage] = useState(1)
   const limit = 9
 
-  useEffect(() => {
-    fetch("/mountains.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setMountains(data)
-      })
-      .catch((err) => console.error("Failed to fetch:", err))
-  }, [])
-
-  const filtered = mountains.filter((m) =>
-    m.name.toLowerCase().includes(search.toLowerCase()) ||
-    m.province.toLowerCase().includes(search.toLowerCase())
-  )
+  const filtered = mountains.filter((m) => {
+    const provinceName = m.provinces?.name?.toLowerCase() ?? ""
+    return (
+      m.name.toLowerCase().includes(search.toLowerCase()) ||
+      provinceName.includes(search.toLowerCase())
+    )
+  })
   const displayed = filtered.slice(0, page * limit)
 
   return (

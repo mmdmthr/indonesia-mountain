@@ -2,8 +2,18 @@
 import "../styles/global.css"
 import SearchBar from '../components/SearchBar.jsx'
 import MainLayout from '../layouts/MainLayout.astro'
+import { getMountains } from '../api/mountains'
+import type { MountainListItem } from '../api/mountains'
+
+// Fetch all mountains at build time — no client-side data fetching needed
+let mountains: MountainListItem[] = [];
+try {
+  mountains = await getMountains();
+} catch (err) {
+  console.warn("[index] Could not fetch mountains from Supabase:", err);
+}
 ---
 
 <MainLayout>
-  <SearchBar client:load />
+  <SearchBar client:load mountains={mountains} />
 </MainLayout>

@@ -15,5 +15,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  adapter: netlify()
+  adapter: netlify(),
+
+  site: 'https://hypsa.netlify.app',
 });

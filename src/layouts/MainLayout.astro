@@ -2,17 +2,30 @@
 import "../styles/global.css";
 import ThemeToggle from "../components/ThemeToggle.jsx";
 
-const { fullWidth = false } = Astro.props;
+interface Props {
+    fullWidth?: boolean;
+    title?: string;
+    description?: string;
+    canonicalURL?: string;
+}
+
+const {
+    fullWidth = false,
+    title,
+    description,
+    canonicalURL,
+} = Astro.props;
+
+const pageTitle = title ?? "Gunung Nusantara";
+const pageDescription = description ?? "Nama-nama gunung di Indonesia, lokasi dan ketinggiannya.";
 ---
 
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-            name="description"
-            content="Nama-nama gunung di Indonesia,lokasi dan ketinggiannya."
-        />
+        <meta name="description" content={pageDescription} />
+        {canonicalURL && <link rel="canonical" href={canonicalURL} />}
         <meta
             name="google-site-verification"
             content="nh2jnkmb60HsSF6-mzod5B4ULrGtOpfefhM7i1EIjXk"
@@ -22,7 +35,7 @@ const { fullWidth = false } = Astro.props;
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
-        <title>Gunung Nusantara</title>
+        <title>{pageTitle}</title>
 
         <!-- Dark mode initialization script -->
         <script is:inline>

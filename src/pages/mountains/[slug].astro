@@ -2,36 +2,153 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import type { GetStaticPaths } from "astro";
 import MainLayout from "../../layouts/MainLayout.astro";
-
 import MountainViewer from "../../components/MountainViewer.jsx";
+import { getMountainSlugs, getMountainBySlug } from "../../api/mountains";
 
-export async function getStaticPaths() {
-    const dir = path.join(process.cwd(), "public/heightmaps");
+// Explicitly mark as statically pre-rendered (important when using Netlify SSR adapter)
+export const prerender = true;
 
-    const files = fs.readdirSync(dir);
+export const getStaticPaths: GetStaticPaths = async () => {
+    // Fetch slugs from Supabase
+    let supabaseSlugs: string[] = [];
+    try {
+        supabaseSlugs = await getMountainSlugs();
+    } catch (err) {
+        console.warn("[mountains/[slug]] Could not fetch slugs from Supabase:", err);
+    }
 
-    return files
-        .filter((file) => file.endsWith("_heightmap.png"))
-        .map((file) => ({
-            params: {
-                slug: file.replace("_heightmap.png", ""),
-            },
-        }));
-}
+    // Also include slugs from heightmap files so 3D-only pages still build
+    const heightmapDir = path.join(process.cwd(), "public/heightmaps");
+    let heightmapSlugs: string[] = [];
+    try {
+        const files = fs.readdirSync(heightmapDir);
+        heightmapSlugs = files
+            .filter((file) => file.endsWith("_heightmap.png"))
+            .map((file) => file.replace("_heightmap.png", ""));
+    } catch {
+        // heightmaps dir may be empty or missing
+    }
+
+    // Deduplicated union of both sources
+    const allSlugs = [...new Set([...supabaseSlugs, ...heightmapSlugs])];
+    return allSlugs.map((slug) => ({ params: { slug } }));
+};
 
 const { slug } = Astro.params;
+
+// Fetch full mountain detail from Supabase
+const mountain = await getMountainBySlug(String(slug));
+
+if (!mountain) {
+    return Astro.redirect("/404");
+}
+
+// Check if a heightmap exists for the 3D viewer
+const heightmapPath = path.join(
+    process.cwd(),
+    "public/heightmaps",
+    `${slug}_heightmap.png`,
+);
+const hasHeightmap = fs.existsSync(heightmapPath);
+
+const provinceName = mountain.provinces?.name ?? "Tidak diketahui";
+const elevationFormatted = mountain.elevation.toLocaleString("id-ID");
+
+// SEO metadata
+const pageTitle = `${mountain.name} (${elevationFormatted} mdpl) – Gunung Nusantara`;
+const pageDescription = `${mountain.name} adalah gunung dengan ketinggian ${elevationFormatted} mdpl yang terletak di ${provinceName}.`;
+
+const canonicalURL = Astro.site
+    ? `${Astro.site}mountains/${slug}`
+    : Astro.url.href;
+
+// Build bbox from Supabase data when available, otherwise fall back to a default
+const hasBbox =
+    mountain.min_lat != null &&
+    mountain.min_lng != null &&
+    mountain.max_lat != null &&
+    mountain.max_lng != null;
+
+const bbox = hasBbox
+    ? {
+          north: mountain.max_lat!,
+          south: mountain.min_lat!,
+          west: mountain.min_lng!,
+          east: mountain.max_lng!,
+      }
+    : {
+          north: -7.339934,
+          south: -7.439919,
+          west: 110.009976,
+          east: 110.129988,
+      };
 ---
 
-<MainLayout fullWidth={true}>
-    <MountainViewer
-        client:only
-        slug={slug}
-        bbox={{
-            north: -7.339934,
-            south: -7.439919,
-            west: 110.009976,
-            east: 110.129988,
-        }}
-    />
+<MainLayout
+    title={pageTitle}
+    description={pageDescription}
+    canonicalURL={canonicalURL}
+>
+    <!-- Basic information – always visible -->
+    <div class="max-w-2xl mx-auto py-8 px-4">
+        <!-- Back link -->
+        <a
+            href="/"
+            class="inline-block mb-6 text-sm text-teal-600 dark:text-teal-400 hover:underline"
+        >
+            ← Kembali ke daftar gunung
+        </a>
+
+        <!-- Mountain name -->
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+            {mountain.name}
+        </h1>
+
+        <!-- Province -->
+        <p class="text-teal-700 dark:text-teal-400 font-medium mb-6">
+            {provinceName}
+        </p>
+
+        <!-- Stats grid -->
+        <dl class="grid grid-cols-2 gap-4 mb-8 bg-teal-700 dark:bg-teal-800 rounded-xl px-6 py-4 text-yellow-100">
+            <div>
+                <dt class="text-xs uppercase tracking-wide text-teal-300 mb-1">
+                    Ketinggian
+                </dt>
+                <dd class="text-xl font-semibold">
+                    {elevationFormatted}{" "}
+                    <span class="text-sm font-normal">mdpl</span>
+                </dd>
+            </div>
+            <div>
+                <dt class="text-xs uppercase tracking-wide text-teal-300 mb-1">
+                    Koordinat
+                </dt>
+                <dd class="text-sm font-mono">
+                    {mountain.lat.toFixed(5)}, {mountain.lng.toFixed(5)}
+                </dd>
+            </div>
+        </dl>
+
+        <!-- Google Maps link -->
+        <a
+            href={`https://www.google.com/maps/@${mountain.lat},${mountain.lng},13z`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm text-teal-600 dark:text-teal-400 hover:underline"
+        >
+            📍 Lihat di Google Maps
+        </a>
+    </div>
+
+    <!-- 3D viewer – only rendered when a heightmap is available -->
+    {
+        hasHeightmap && (
+            <div class="w-full" style="height: 60vh;">
+                <MountainViewer client:only slug={slug} bbox={bbox} />
+            </div>
+        )
+    }
 </MainLayout>
