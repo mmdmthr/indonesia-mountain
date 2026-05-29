@@ -5,41 +5,48 @@ import path from "node:path";
 import type { GetStaticPaths } from "astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import MountainViewer from "../../components/MountainViewer.jsx";
-import { getMountainSlugs, getMountainBySlug } from "../../api/mountains";
+import type { Mountain } from "../../api/mountains";
+import { getAllMountains } from "../../api/mountains";
 
 // Explicitly mark as statically pre-rendered (important when using Netlify SSR adapter)
 export const prerender = true;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // Fetch slugs from Supabase
-    let supabaseSlugs: string[] = [];
+    // Single query — all 315+ mountains with full data fetched once.
+    // The result is module-level cached in api/mountains.ts, so any other
+    // build-time code that also calls getAllMountains() pays zero extra cost.
+    let mountains: Mountain[] = [];
     try {
-        supabaseSlugs = await getMountainSlugs();
+        mountains = await getAllMountains();
     } catch (err) {
-        console.warn("[mountains/[slug]] Could not fetch slugs from Supabase:", err);
+        console.warn("[mountains/[slug]] Could not fetch mountains from Supabase:", err);
     }
+
+    // Build a lookup map for fast O(1) access when merging heightmap-only slugs
+    const mountainBySlug = new Map(mountains.map((m) => [m.slug, m]));
 
     // Also include slugs from heightmap files so 3D-only pages still build
     const heightmapDir = path.join(process.cwd(), "public/heightmaps");
-    let heightmapSlugs: string[] = [];
     try {
-        const files = fs.readdirSync(heightmapDir);
-        heightmapSlugs = files
-            .filter((file) => file.endsWith("_heightmap.png"))
-            .map((file) => file.replace("_heightmap.png", ""));
+        const files = fs.readdirSync(heightmapDir) as string[];
+        files
+            .filter((file: string) => file.endsWith("_heightmap.png"))
+            .map((file: string) => file.replace("_heightmap.png", ""))
+            .filter((s: string) => !mountainBySlug.has(s))
+            .forEach((s: string) => mountainBySlug.set(s, null as unknown as Mountain));
     } catch {
         // heightmaps dir may be empty or missing
     }
 
-    // Deduplicated union of both sources
-    const allSlugs = [...new Set([...supabaseSlugs, ...heightmapSlugs])];
-    return allSlugs.map((slug) => ({ params: { slug } }));
+    // Each path carries its mountain data as props — no per-page DB query needed
+    return [...mountainBySlug.entries()].map(([slug, mountain]) => ({
+        params: { slug },
+        props: { mountain },
+    }));
 };
 
 const { slug } = Astro.params;
-
-// Fetch full mountain detail from Supabase
-const mountain = await getMountainBySlug(String(slug));
+const { mountain } = Astro.props as { mountain: Mountain | null };
 
 if (!mountain) {
     return Astro.redirect("/404");

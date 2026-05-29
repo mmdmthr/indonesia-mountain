@@ -29,7 +29,31 @@ export type MountainListItem = Pick<
   "id" | "slug" | "name" | "elevation" | "lat" | "lng" | "provinces"
 >;
 
+// --- Module-level cache ---
+// Populated once during build; subsequent calls within the same Node process
+// (i.e. every page in getStaticPaths) return the cached array without hitting
+// Supabase again.
+let mountainsCache: Mountain[] | null = null;
+
 // --- API functions ---
+
+/**
+ * Fetch ALL mountains with full fields + province name, ordered alphabetically.
+ * Results are cached in-process so the build only executes one Supabase query
+ * regardless of how many static pages are generated.
+ */
+export async function getAllMountains(): Promise<Mountain[]> {
+  if (mountainsCache) return mountainsCache;
+
+  const { data, error } = await supabase
+    .from("mountains")
+    .select("*, provinces(name)")
+    .order("name");
+
+  if (error) throw new Error(`Failed to fetch all mountains: ${error.message}`);
+  mountainsCache = ((data ?? []) as unknown) as Mountain[];
+  return mountainsCache;
+}
 
 /**
  * Fetch all mountains (lightweight fields only) ordered alphabetically.
