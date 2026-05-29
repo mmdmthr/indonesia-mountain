@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import * as THREE from "three";
 import * as toGeoJSON from "@tmcw/togeojson";
@@ -7,6 +7,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export default function MountainViewer({ slug, bbox }) {
   const containerRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
   const imagePath = `/heightmaps/${slug}_heightmap.png`;
   const texturePath = `/textures/${slug}_satellite.jpg`;
   const params =
@@ -240,6 +241,7 @@ export default function MountainViewer({ slug, bbox }) {
 
       scene.add(terrain);
       loadGPX();
+      setIsLoading(false);
 
       animate();
     };
@@ -271,5 +273,15 @@ export default function MountainViewer({ slug, bbox }) {
     };
   }, [imagePath, texturePath, gpxPath, bbox]);
 
-  return <div ref={containerRef} className="w-full h-[80vh]" />;
+  return (
+    <div className="relative w-full h-[80vh]">
+      {isLoading && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-gray-200 dark:bg-gray-800 animate-pulse rounded">
+          <div className="w-16 h-16 rounded-full border-4 border-teal-400 border-t-transparent animate-spin" />
+          <p className="text-sm text-gray-500 dark:text-gray-400">Memuat terrain 3D…</p>
+        </div>
+      )}
+      <div ref={containerRef} className="w-full h-full" />
+    </div>
+  );
 }
